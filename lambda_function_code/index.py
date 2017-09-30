@@ -64,7 +64,7 @@ def on_intent(intent_request, session):
         return get_dojo_info_response()
     elif intent_name == "DojoStaffIntent":
         return get_dojo_staff_response()
-    elif intent_name == "DojoStackIntent":
+    elif intent_name == "ColourIntent":
         return get_dojo_stack_response(intent_request)
     elif intent_name == "DojoInstructorIntent":
         return get_dojo_instructor_response(intent_request)
@@ -136,8 +136,8 @@ def get_dojo_stack_response(intent_request):
     speech_output = ""
     dojo_city = intent_request["intent"]["slots"]["City"]["value"]
 
-    if dojo_city == "Dallas":
-        speech_output = "The Dallas location teaches Python, MEAN, and Ruby on Rails."
+    if dojo_city == "Red":
+        speech_output = "Red Redyy Reader reader....."
     elif dojo_city == "San Jose":
         speech_output = "The San Jose location teaches Python, MEAN, IOS, and Ruby on Rails."
     elif dojo_city == "Burbank":
