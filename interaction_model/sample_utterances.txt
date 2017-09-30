@@ -1,1 +1,3 @@
 ColourIntent Set colour to {Colour}
+ColourIntent Colour is {Colour}
+ColourIntent Update colour to {Colour}
