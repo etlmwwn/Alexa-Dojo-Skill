@@ -6,6 +6,13 @@ For the full code sample visit https://github.com/pmckinney8/Alexa_Dojo_Skill.gi
 
 from __future__ import print_function
 
+# Import for AWS IOT Connection & JSON to package the data for MQTT Messaging
+
+import boto3
+import json
+
+client = boto3.client('iot-data', region_name='us-east-1')
+
 def lambda_handler(event, context):
     """ Route the incoming request based on type (LaunchRequest, IntentRequest,
     etc.) The JSON body of the request is provided in the event parameter.
@@ -78,12 +85,20 @@ def on_session_ended(session_ended_request, session):
     print("on_session_ended requestId=" + session_ended_request['requestId'] +
           ", sessionId=" + session['sessionId'])
     # add cleanup logic here
-
+    
 # --------------- Functions that control the skill's behavior ------------------
 
+def mqtt(rgb):
+    client = boto3.client('iot-data', region_name='us-east-1')
+    #json_map = {}
+    #json_map["colour"] = rgb
+    response = client.publish(
+        topic='colour',
+        qos=1,
+        payload=json.dumps({"colour":"%s"}) % rgb
+    )
 
 def get_welcome_response():
-
     session_attributes = {}
     card_title = "Welcome"
     speech_output = "Welcome! What Colour would you like to set?"
@@ -110,10 +125,12 @@ def get_colour_response(intent_request):
     card_title = "Colour_Response"
     speech_output = ""
     colour = intent_request["intent"]["slots"]["Colour"]["value"]
-    dict = {'red': '230, 25, 75', 'green': '60, 180, 75', 'yellow': '255, 225, 25', 'blue': '0, 130, 200', 'orange': '245, 130, 48', 'purple': '145, 30, 180', 'cyan': '70, 240, 240', 'magneta': '240, 50, 230', 'lime': '210, 245, 60', 'pink': '250, 190, 190', 'teal': '0, 128, 128', 'lavendar': '230, 190, 255', 'brown': '170, 110, 40', 'beige': '255, 250, 200', 'maroon': '128, 0, 0', 'mint': '170, 255, 195', 'olive': '128, 128, 0', 'coral': '255, 215, 180', 'navy': '0, 0, 128', 'grey': '128, 128, 128', 'white': '255, 255, 255', 'black': '0, 0, 0'}
+    dict = {'red':'230,25,75','green':'60,180,75','yellow':'255,225,25','blue':'0,130,200','orange':'245,130,48','purple':'145,30,180','cyan':'70240240','magneta':'240,50,230','lime':'210,245,60','pink':'250190190','teal':'0,128,128','lavendar':'230190255','brown':'170,110,40','beige':'255250200','maroon':'128,0,0','mint':'170255195','olive':'128,128,0','coral':'255215180','navy':'0,0,128','grey':'128128128','white':'255255255','black':'0,0,0'}
+
     rgb = dict.get(colour)
 
     if dict.get(colour) is not None:
+        mqtt(rgb)
         speech_output = "The colour is set to %s and R G B is %s" % (colour, rgb)
     else:
         speech_output = "Sorry, this isn't the %s you are looking for" % colour
@@ -130,9 +147,7 @@ def handle_session_end_request():
     return build_response({}, build_speechlet_response(
         card_title, speech_output, None, should_end_session))
 
-
-# --------------- Helpers that build all of the responses ----------------------
-
+# --------------- Helpers that build all of the responses ---------------------
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
     return {
