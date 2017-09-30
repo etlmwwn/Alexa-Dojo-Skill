@@ -110,21 +110,13 @@ def get_colour_response(intent_request):
     card_title = "Colour_Response"
     speech_output = ""
     colour = intent_request["intent"]["slots"]["Colour"]["value"]
+    dict = {'red': '230, 25, 75', 'green': '60, 180, 75', 'yellow': '255, 225, 25', 'blue': '0, 130, 200', 'orange': '245, 130, 48', 'purple': '145, 30, 180', 'cyan': '70, 240, 240', 'magneta': '240, 50, 230', 'lime': '210, 245, 60', 'pink': '250, 190, 190', 'teal': '0, 128, 128', 'lavendar': '230, 190, 255', 'brown': '170, 110, 40', 'beige': '255, 250, 200', 'maroon': '128, 0, 0', 'mint': '170, 255, 195', 'olive': '128, 128, 0', 'coral': '255, 215, 180', 'navy': '0, 0, 128', 'grey': '128, 128, 128', 'white': '255, 255, 255', 'black': '0, 0, 0'}
+    rgb = dict.get(colour)
 
-    if colour == "red":
-        speech_output = "The colour is set to %s" % colour
-    elif colour == "blue":
-        speech_output = "The colour is set to %s" % colour
-    elif colour == "Burbank":
-        speech_output = "The colour is set to %s" % colour
-    elif colour == "Washington":
-        speech_output = "The colour is set to %s" % colour
-    elif colour == "Chicago":
-        speech_output = "The colour is set to %s" % colour
-    elif colour == "Seattle":
-        speech_output = "The colour is set to %s" % colour
+    if dict.get(colour) is not None:
+        speech_output = "The colour is set to %s and R G B is %s" % (colour, rgb)
     else:
-        speech_output = "Sorry, this isn't the colour you are looking for"
+        speech_output = "Sorry, this isn't the %s you are looking for" % colour
     reprompt_text = speech_output
     should_end_session = True
 
