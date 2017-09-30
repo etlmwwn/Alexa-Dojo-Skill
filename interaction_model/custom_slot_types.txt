@@ -1,8 +1,8 @@
-CITIES
+COLOURS
 --------
-San Jose
-Seattle
-Burbank
-Chicago
-Washington
-Dallas
+Red
+Blue
+Yellow
+Purple
+Pink
+White
