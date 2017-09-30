@@ -125,23 +125,23 @@ def get_colour_response(intent_request):
     card_title = "Colour_Response"
     speech_output = ""
     colour = intent_request["intent"]["slots"]["Colour"]["value"]
-    dict = {'red':'230,25,75','green':'60,180,75','yellow':'255,225,25','blue':'0,130,200','orange':'245,130,48','purple':'145,30,180','cyan':'70240240','magneta':'240,50,230','lime':'210,245,60','pink':'250190190','teal':'0,128,128','lavendar':'230190255','brown':'170,110,40','beige':'255250200','maroon':'128,0,0','mint':'170255195','olive':'128,128,0','coral':'255215180','navy':'0,0,128','grey':'128128128','white':'255255255','black':'0,0,0'}
+    dict = {'red':'230,25,75','green':'60,180,75','yellow':'255,225,25','blue':'0,130,200','orange':'245,130,48','purple':'145,30,180','cyan':'70,40,240','magneta':'240,50,230','lime':'210,245,60','pink':'250,190,190','teal':'0,128,128','lavendar':'230,190,255','brown':'170,110,40','beige':'255,250,200','maroon':'128,0,0','mint':'170,255,195','olive':'128,128,0','coral':'255,215,180','navy':'0,0,128','grey':'128,128,128','white':'255,255,255','black':'0,0,0'}
 
     rgb = dict.get(colour)
 
     if dict.get(colour) is not None:
         mqtt(rgb)
-        speech_output = "The colour is set to %s and R G B is %s" % (colour, rgb)
+        speech_output = "The colour is set to %s" % (colour)
     else:
         speech_output = "Sorry, this isn't the %s you are looking for" % colour
     reprompt_text = speech_output
-    should_end_session = True
+    should_end_session = False
 
     return build_response(session_attributes, build_speechlet_response(card_title,speech_output,reprompt_text,should_end_session))
 
 def handle_session_end_request():
     card_title = "Session Ended"
-    speech_output = "Thank you for using the Coding Dojo skill! We hope you enjoyed the experience."
+    speech_output = "Thank you for using the colour magic skill! We hope you enjoyed the experience."
     # Setting this to true ends the session and exits the skill.
     should_end_session = True
     return build_response({}, build_speechlet_response(
