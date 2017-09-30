@@ -1,8 +1,8 @@
 COLOURS
 --------
-Red
-Blue
-Yellow
-Purple
-Pink
-White
+red
+blue
+yellow
+purple
+pink
+white
