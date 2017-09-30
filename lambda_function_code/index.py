@@ -61,7 +61,7 @@ def on_intent(intent_request, session):
 
     # Dispatch to your skill's intent handlers
     if intent_name == "ColourIntent":
-        return get_dojo_stack_response(intent_request)
+        return get_colour_response(intent_request)
     elif intent_name == "AMAZON.HelpIntent":
         return get_help_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
@@ -86,7 +86,7 @@ def get_welcome_response():
 
     session_attributes = {}
     card_title = "Welcome"
-    speech_output = "Welcome to the Coding Dojo Skill. Great Job on getting started with your first skill. To get some examples of what this skill can do, ask for help now."
+    speech_output = "Welcome! What Colour would you like to set?"
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with the same text.
     reprompt_text = speech_output
@@ -98,82 +98,37 @@ def get_welcome_response():
 def get_help_response():
     session_attributes = {}
     card_title = "Help"
-    speech_output = "Welcome to the help section for the Coding Dojo Skill. A couple of examples of phrases that I can except are... What is the coding dojo... or, who are the instructors. Lets get started now by trying one of these."
+    speech_output = "Welcome to the help section for the colour skill. A couple of examples of phrases that I can except are... Set colour to... Lets get started now by trying one of these."
 
     reprompt_text = speech_output
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(card_title,speech_output,reprompt_text,should_end_session))
 
 
-def get_dojo_info_response():
+def get_colour_response(intent_request):
     session_attributes = {}
-    card_title = "Dojo_Info"
-    speech_output = "The Coding Dojo is a 3 month immersive web developement bootcamp. During these 3 months you will learn 3 full web developement stacks. The stacks that we offer are... Django, Rails, Mean, IOS, and PHP."
-
-    reprompt_text = speech_output
-    should_end_session = True
-    return build_response(session_attributes, build_speechlet_response(card_title,speech_output,reprompt_text,should_end_session))
-
-
-def get_dojo_staff_response():
-    session_attributes = {}
-    card_title = "Dojo_Staff"
-    speech_output = "The Coding Dojo has a number of instructors at different locations. Our current locations are San Jose, Seattle, Burbank, Dallas, Washington DC, and Chicago. If you want information about a particular location you can ask the Coding Dojo skill. So for example you can ask... who are the instructors at the Chicago location."
-    reprompt_text = speech_output
-    should_end_session = True
-    return build_response(session_attributes, build_speechlet_response(card_title,speech_output,reprompt_text,should_end_session))
-
-
-def get_dojo_stack_response(intent_request):
-    session_attributes = {}
-    card_title = "Dojo_Stack"
+    card_title = "Colour_Response"
     speech_output = ""
-    dojo_city = intent_request["intent"]["slots"]["Colour"]["value"]
+    colour = intent_request["intent"]["slots"]["Colour"]["value"]
 
-    if dojo_city == "red":
-        speech_output = "Red Redyy Reader reader....."
-    elif dojo_city == "blue":
-        speech_output = "The San Jose location teaches Python, MEAN, IOS, and Ruby on Rails."
-    elif dojo_city == "Burbank":
-        speech_output = "The Burbank location teaches Python, MEAN, PHP, IOS, and Ruby on Rails."
-    elif dojo_city == "Washington":
-        speech_output = "The Washington DC location teaches Python, MEAN, and Ruby on Rails."
-    elif dojo_city == "Chicago":
-        speech_output = "The Chicago location teaches Python, MEAN, and Ruby on Rails."
-    elif dojo_city == "Seattle":
-        speech_output = "The Seattle location teaches Python, MEAN, IOS, and Ruby on Rails."
+    if colour == "red":
+        speech_output = "The colour is set to %s" % colour
+    elif colour == "blue":
+        speech_output = "The colour is set to %s" % colour
+    elif colour == "Burbank":
+        speech_output = "The colour is set to %s" % colour
+    elif colour == "Washington":
+        speech_output = "The colour is set to %s" % colour
+    elif colour == "Chicago":
+        speech_output = "The colour is set to %s" % colour
+    elif colour == "Seattle":
+        speech_output = "The colour is set to %s" % colour
     else:
-        speech_output = "Sorry, the Coding Dojo does not have a location that matches what you have asked for."
+        speech_output = "Sorry, this isn't the colour you are looking for"
     reprompt_text = speech_output
     should_end_session = True
 
     return build_response(session_attributes, build_speechlet_response(card_title,speech_output,reprompt_text,should_end_session))
-
-def get_dojo_instructor_response(intent_request):
-    session_attributes = {}
-    card_title = "Dojo_Stack"
-    speech_output = ""
-    dojo_city = intent_request["intent"]["slots"]["City"]["value"]
-
-    if dojo_city == "Dallas":
-        speech_output = "The Dallas instructors are Authman, and Liam."
-    elif dojo_city == "San Jose":
-        speech_output = "The San Jose instructors are Pariece, Jay, and Brendan."
-    elif dojo_city == "Burbank":
-        speech_output = "The Burbank instructors are Chris, Eduardo, and Lance."
-    elif dojo_city == "Washington":
-        speech_output = "The Washington instructors are Mihn, and Dan."
-    elif dojo_city == "Chicago":
-        speech_output = "The Chicago instructors are Chris, and Mike."
-    elif dojo_city == "Seattle":
-        speech_output = "The Seattle instructors are Martin, Speros, and Charlie."
-    else:
-        speech_output = "Sorry, the Coding Dojo does not have a location that matches what you have asked for."
-    reprompt_text = speech_output
-    should_end_session = True
-
-    return build_response(session_attributes, build_speechlet_response(card_title,speech_output,reprompt_text,should_end_session))
-
 
 def handle_session_end_request():
     card_title = "Session Ended"
