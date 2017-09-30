@@ -60,14 +60,8 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     # Dispatch to your skill's intent handlers
-    if intent_name == "DojoInfoIntent":
-        return get_dojo_info_response()
-    elif intent_name == "DojoStaffIntent":
-        return get_dojo_staff_response()
-    elif intent_name == "ColourIntent":
+    if intent_name == "ColourIntent":
         return get_dojo_stack_response(intent_request)
-    elif intent_name == "DojoInstructorIntent":
-        return get_dojo_instructor_response(intent_request)
     elif intent_name == "AMAZON.HelpIntent":
         return get_help_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
@@ -134,11 +128,11 @@ def get_dojo_stack_response(intent_request):
     session_attributes = {}
     card_title = "Dojo_Stack"
     speech_output = ""
-    dojo_city = intent_request["intent"]["slots"]["City"]["value"]
+    dojo_city = intent_request["intent"]["slots"]["Colour"]["value"]
 
-    if dojo_city == "Red":
+    if dojo_city == "red":
         speech_output = "Red Redyy Reader reader....."
-    elif dojo_city == "San Jose":
+    elif dojo_city == "blue":
         speech_output = "The San Jose location teaches Python, MEAN, IOS, and Ruby on Rails."
     elif dojo_city == "Burbank":
         speech_output = "The Burbank location teaches Python, MEAN, PHP, IOS, and Ruby on Rails."
