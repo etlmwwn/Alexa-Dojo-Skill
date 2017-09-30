@@ -1,27 +1,11 @@
 {
   "intents": [
     {
-      "intent": "DojoInfoIntent"
-    },
-    {
-      "intent": "DojoStaffIntent"
-    },
-
-    {
-      "intent": "DojoStackIntent",
+      "intent": "ColourIntent",
       "slots" : [
         {
-          "name": "City",
-          "type": "CITIES"
-        }
-      ]
-    },
-     {
-      "intent": "DojoInstructorIntent",
-      "slots" : [
-        {
-          "name": "City",
-          "type": "CITIES"
+          "name": "Colour",
+          "type": "COLOURS"
         }
       ]
     },{
